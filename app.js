@@ -12,8 +12,9 @@ app.use(bodyParser.json({
     type: 'application/json'
 }));
 
-//http://localhost:3000/pool/create?key=374609c6&secret=330ef6e8837b1b5f&pool_id=Adidas_test_pool
+//http://localhost:3000/pool/create?key=<API_KEY>&secret=<API_SECRET>&pool_id=Adidas_Verify_Pool
 
+//CREATE POOL
 app.all('/pool/create', (req, resp) => {
     if (req.query.key && req.query.secret) {
         var params = {
@@ -41,7 +42,7 @@ app.all('/pool/create', (req, resp) => {
                 return resp.sendStatus(400);
             }
 
-            console.log(body.url);
+            console.log(body);
             console.log(body.explanation);
             console.log(res)
             return resp.sendStatus(200);
@@ -50,7 +51,96 @@ app.all('/pool/create', (req, resp) => {
 
 
     } else {
-        resp.sendStatus(400);
+        resp.sendStatus(401);
+    }
+});
+
+
+//http://localhost:3000/pool/add/numbers?key=<API_KEY>&secret=<API_SECRET>&pool_id=testya&number_string=12013753298+12017621858+12037180127
+
+//ADD NUMBERS TO POOL
+app.all('/pool/add/numbers', (req, resp) => {
+    if (req.query.key && req.query.secret) {
+        var numberArray = []
+        var string = req.query.number_string;
+
+        string = string.split(" ");
+        for (var i = 0; i < string.length; i++) {
+            numberArray.push(string[i]);
+        }
+
+        var params = {
+            numbers: numberArray
+        }
+
+        var options = {
+            uri: "https://api.nexmo.com/v1/pools/" + req.query.pool_id + "/numbers",
+            method: 'POST',
+            json: params,
+            headers: {
+                Authorization: "Api-Key " + req.query.key + " " + req.query.secret,
+                "Content-Type": "application/json"
+            }
+        };
+
+        console.log("params: ", req.query);
+        request(options, (err, res, body) => {
+            if (err) {
+                console.log(err);
+                return resp.sendStatus(400);
+            }
+
+            console.log(body);
+            console.log(body.explanation);
+            console.log(res)
+            return resp.sendStatus(200);
+        });
+
+
+
+    } else {
+        resp.sendStatus(401);
+    }
+});
+
+//http://localhost:3000/pool/all?key=<API_KEY>&secret=<API_SECRET>
+
+//GET ALL POOLS ON AN ACCOUNT
+app.all('/pool/all', (req, resp) => {
+    if (req.query.key && req.query.secret) {
+
+        var params = {
+            "account_id": req.query.key,
+            "page_size": 1
+        }
+
+        var options = {
+            uri: "https://api.nexmo.com/v1/pools",
+            method: 'GET',
+            json: params,
+            headers: {
+                Authorization: "Api-Key " + req.query.key + " " + req.query.secret,
+                "Content-Type": "application/json"
+            }
+        };
+
+        console.log("params: ", req.query);
+        request(options, (err, res, body) => {
+            if (err) {
+                console.log(err);
+                return resp.sendStatus(400);
+            }
+
+            console.log(body);
+            console.log(body.explanation);
+            console.log(res)
+            return resp.sendStatus(200);
+        });
+
+
+
+    } else {
+        resp.sendStatus(401);
     }
 });
 
