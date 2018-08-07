@@ -12,7 +12,7 @@ app.use(bodyParser.json({
     type: 'application/json'
 }));
 
-//http://localhost:3000/pool/create?key=374609c6&secret=330ef6e8837b1b5f&pool_id=Adidas_Verify_Pool
+//http://localhost:3000/pool/create?key=<key>&secret=<secret>&pool_id=Adidas_Verify_Pool
 
 //CREATE POOL
 app.all('/pool/create', (req, resp) => {
@@ -56,7 +56,7 @@ app.all('/pool/create', (req, resp) => {
 });
 
 
-//http://localhost:3000/pool/add/numbers?key=374609c6&secret=330ef6e8837b1b5f&pool_id=testya&number_string=12013753298+12017621858+12037180127
+//http://localhost:3000/pool/add/numbers?key=<key>&secret=<secret>&pool_id=testya&number_string=12013753298+12017621858+12037180127
 
 //ADD NUMBERS TO POOL
 app.all('/pool/add/numbers', (req, resp) => {
@@ -103,7 +103,7 @@ app.all('/pool/add/numbers', (req, resp) => {
     }
 });
 
-//http://localhost:3000/pool/all?key=374609c6&secret=330ef6e8837b1b5f
+//http://localhost:3000/pool/all?key=<key>&secret=<secret>
 
 //GET ALL POOLS ON AN ACCOUNT
 app.all('/pool/all', (req, resp) => {
