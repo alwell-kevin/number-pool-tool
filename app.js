@@ -12,7 +12,7 @@ app.use(bodyParser.json({
     type: 'application/json'
 }));
 
-//http://localhost:3000/pool/create?key=<key>&secret=<secret>&pool_id=Adidas_Verify_Pool
+//http://localhost:3000/pool/create?key=<key>&secret=<secret>&pool_id=<pool_id>
 
 //CREATE POOL
 app.all('/pool/create', (req, resp) => {
