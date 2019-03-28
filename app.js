@@ -12,6 +12,7 @@ app.use(bodyParser.json({
     type: 'application/json'
 }));
 
+
 //http://localhost:3000/pool/create?key=<key>&secret=<secret>&pool_id=<pool_id>
 
 //CREATE POOL
